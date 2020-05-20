@@ -1,6 +1,6 @@
 # Stock-Ticker
 Web application to display stock quotes in real time
-This is the backend implementation of a web application built to serve real time stock quote requests. The Yahoo Finance API is used to retrieve stock quotes. The user can add quotes to watch and remove quotes from the watch list. Quotes are only retrieved for stocks currently being watched. 
+This is the backend implementation of a web application built to serve real time stock quote requests. The Yahoo Finance API is used to retrieve stock quotes. The user can add quotes to watch and remove quotes from the watch list. Quotes are only retrieved for stocks currently being watched. Data persistence is achieved be using an H2 database and Hibernate to access records. The stomp protocol is used along with Websockets to faciliate message passing. 
 
 ## APIs provided
 Endpoints are provided to add stocks to be watched, remove stocks from being watched, retrieve all stocks currently watched, and retrieve quotes for all stocks currently being watched. 
