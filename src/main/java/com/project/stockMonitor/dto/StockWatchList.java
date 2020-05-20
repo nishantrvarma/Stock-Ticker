@@ -13,5 +13,4 @@ import java.util.HashSet;
 @NoArgsConstructor
 public class StockWatchList {
     private HashSet<String> stocks;
-
 }

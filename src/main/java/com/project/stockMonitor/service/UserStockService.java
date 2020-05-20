@@ -26,6 +26,13 @@ public class UserStockService {
     @Autowired
     private SimpMessagingTemplate template;
 
+
+    /*
+    //Add set of stocks to be watched
+    //Param : Set<String> stockList
+    //Returns: void
+    //
+    */
     public void addToWatch(Set<String> stockList) throws IOException {
         String[] stockArray = new String[stockList.size()];
         Map<String, Stock> validStockMap = YahooFinance.get(stockList.toArray(stockArray));
@@ -43,11 +50,23 @@ public class UserStockService {
         }
     }
 
+    /*
+    //get set of stocks being watched
+    //Param : null
+    //Returns: StockWatchList
+    //
+    */
     public StockWatchList getAllWatched() throws IOException {
         UserStockData watchedStocks = userStockDataRepository.findByName("Default User");
         return convertToStockWatchList(watchedStocks);
     }
 
+    /*
+    //Remove from set of stocks to be watched
+    //Param : Set<String> stockList
+    //Returns: void
+    //
+    */
     public void removeFromWatched(Set<String> stockList) throws IOException {
         UserStockData watchedStocks = userStockDataRepository.findByName("Default User");
         StockWatchList updatedStockWatchList = convertToStockWatchList(watchedStocks);
@@ -56,6 +75,12 @@ public class UserStockService {
         userStockDataRepository.save(watchedStocks);
     }
 
+    /*
+    //get quotes for stocks being watched
+    //Param : null
+    //Returns: StockQuoteList
+    //
+    */
     public StockQuoteList getQuotes() throws IOException {
         UserStockData watchedStocks = userStockDataRepository.findByName("Default User");
         String[] stockArray = new String[watchedStocks.getStockList().size()];
@@ -63,6 +88,12 @@ public class UserStockService {
         return convertToStockQuoteList(validStockMap);
     }
 
+    /*
+    //Pushes updated quotes for stocks being watched to websocket
+    //Param : null
+    //Returns: void
+    //
+    */
     @Scheduled(fixedRate = 5000)
     public void getScheduledQuotes() throws IOException {
         if(!userStockDataRepository.existsByName("Default User")){
@@ -80,7 +111,7 @@ public class UserStockService {
         for(String symbol : validStockMap.keySet()){
             StockQuote currentQuote = validStockMap.get(symbol).getQuote();
             Quote quote = convertToQuote(currentQuote);
-            stockQuoteList.getStockQuoteList().add(quote);
+            stockQuoteList.getQuoteList().add(quote);
         }
         return stockQuoteList;
     }

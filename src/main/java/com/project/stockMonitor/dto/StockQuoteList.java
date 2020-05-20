@@ -14,5 +14,5 @@ import java.util.ArrayList;
 @NoArgsConstructor
 public class StockQuoteList {
     private Instant currentTime;
-    private ArrayList<Quote> stockQuoteList;
+    private ArrayList<Quote> quoteList;
 }
